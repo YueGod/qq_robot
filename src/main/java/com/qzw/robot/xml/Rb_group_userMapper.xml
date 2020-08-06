@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qzw.robot.mapper.Rb_group_userMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qzw.robot.entity.Rb_group_user">
+        <id column="id" property="id"/>
+        <result column="qq" property="qq"/>
+        <result column="nickname" property="nickname"/>
+        <result column="group_id" property="group_id"/>
+    </resultMap>
+
+    <select id="findUserByQQAndGroupNumber" resultType="com.qzw.robot.entity.Rb_group_user">
+        select u.id,u.qq,u.nickname,u.group_id
+        from (select * from rb_group)g, (select * from rb_group_user)u
+        where g.id = u.group_id and u.qq = ${qq} and g.number = ${number}
+    </select>
+
+</mapper>
