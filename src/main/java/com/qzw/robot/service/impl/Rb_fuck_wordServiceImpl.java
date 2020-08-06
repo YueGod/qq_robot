@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author YueGod
  * @since 2020-08-06
  */
-@Service("fuckWordServiceImpl")
+@Service
 public class Rb_fuck_wordServiceImpl extends ServiceImpl<Rb_fuck_wordMapper, Rb_fuck_word> implements IRb_fuck_wordService {
 
 }

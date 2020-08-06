@@ -3,7 +3,11 @@ package com;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import com.qzw.robot.event.GroupAdminEvent;
+import com.qzw.robot.service.IRb_groupService;
+import com.qzw.robot.service.IRb_group_historyService;
+import com.qzw.robot.service.IRb_group_userService;
 import com.qzw.robot.util.RobotUtils;
+import com.qzw.robot.util.ServiceUtils;
 import com.qzw.robot.util.TimeUtil;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactoryJvm;
@@ -11,12 +15,17 @@ import net.mamoe.mirai.event.Events;
 import net.mamoe.mirai.utils.BotConfiguration;
 import net.mamoe.mirai.utils.SystemDeviceInfoKt;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 import java.io.File;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author ：quziwei
@@ -27,18 +36,28 @@ import java.io.File;
 @MapperScan("com.qzw.robot.mapper")
 public class RobotApplication implements CommandLineRunner {
     public static Bot bot;
+
     public static String startTime = TimeUtil.getDateTimeString();
 
-    @Value("${qzw.qq.number}")
-    private Long qq;
+    private Long qq=1773979533L;
 
-    @Value("${qzw.qq.password}")
-    private String password;
+    private String password="quziwei123";
+
+    @Autowired
+    private IRb_groupService groupService;
+
+    @Autowired
+    private IRb_group_userService userService;
+
+    @Autowired
+    private IRb_group_historyService historyService;
 
     public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(RobotApplication.class, args);
         Thread.currentThread().join();
     }
+
+
 
 
     @Override

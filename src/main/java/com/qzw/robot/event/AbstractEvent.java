@@ -1,5 +1,6 @@
 package com.qzw.robot.event;
 
+import com.qzw.robot.util.SpringUtil;
 import kotlin.coroutines.experimental.CoroutineContext;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.GroupMemberEvent;
@@ -42,5 +43,9 @@ public abstract class AbstractEvent extends SimpleListenerHost {
      */
     public String getUserNick(GroupMemberEvent event){
         return String.valueOf(event.getMember().getNick());
+    }
+
+    public Object getBean(Class<?> clazz){
+        return SpringUtil.getBean(clazz);
     }
 }
