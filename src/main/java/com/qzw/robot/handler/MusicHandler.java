@@ -3,7 +3,6 @@ package com.qzw.robot.handler;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qzw.robot.util.HttpUtils;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ public class MusicHandler {
 
     private static final String URL = "http://music.163.com/api/search/pc";
     private static final String URL2 = "https://api.imjad.cn/cloudmusic/";
-    private RestTemplate restTemplate;
     public String findMusic(String msg){
         msg = msg.replaceAll("听音乐 ","");
         HashMap<String,String> n = new HashMap<>();

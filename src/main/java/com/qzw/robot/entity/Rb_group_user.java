@@ -1,8 +1,12 @@
 package com.qzw.robot.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import org.apache.ibatis.type.JdbcType;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -23,8 +27,19 @@ public class Rb_group_user implements Serializable {
 
     private String nickname;
 
+    @TableField(value = "group_id",jdbcType = JdbcType.INTEGER)
     private Integer group_id;
 
+    @TableField(value = "score",jdbcType = JdbcType.DECIMAL)
+    private BigDecimal score;
+
+    public BigDecimal getScore() {
+        return score;
+    }
+
+    public void setScore(BigDecimal score) {
+        this.score = score;
+    }
 
     public Integer getId() {
         return id;

@@ -1,11 +1,13 @@
 package com.qzw.robot.event;
 
+import cn.hutool.core.img.Img;
 import com.RobotApplication;
 import com.qzw.robot.entity.Rb_group;
 import com.qzw.robot.entity.Rb_group_history;
 import com.qzw.robot.entity.Rb_group_user;
 import com.qzw.robot.handler.MenuListHandler;
 import com.qzw.robot.handler.MusicHandler;
+import com.qzw.robot.menu.Music;
 import com.qzw.robot.service.IRb_fuck_wordService;
 import com.qzw.robot.service.IRb_groupService;
 import com.qzw.robot.service.IRb_group_historyService;
@@ -16,9 +18,13 @@ import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.ListeningStatus;
 import net.mamoe.mirai.message.GroupMessageEvent;
+import net.mamoe.mirai.message.data.GroupImage;
+import net.mamoe.mirai.message.data.Image;
+import net.mamoe.mirai.message.data.Message;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.utils.ExternalImage;
 import net.mamoe.mirai.utils.FileCacheStrategy;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.io.File;
@@ -127,16 +133,7 @@ public class GroupMessagesEvent extends AbstractEvent {
             event.getGroup().sendMessage(list);
             return ListeningStatus.LISTENING;
         }
-        if (msg.indexOf("听音乐 ") > -1) {
-            MusicHandler musicHandler = new MusicHandler();
-            String music = musicHandler.findMusic(msg);
-            event.getGroup().sendMessage(music);
-            return ListeningStatus.LISTENING;
-        }
-        if (msg.equals("退群吧")) {
-            event.getGroup().sendMessage("好的我退群了");
-
-        }
+        Music music = new Music(msg,event);
         return ListeningStatus.LISTENING;
     }
 }

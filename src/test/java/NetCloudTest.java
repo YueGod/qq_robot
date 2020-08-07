@@ -3,7 +3,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.qzw.robot.util.HttpUtils;
 import kotlinx.serialization.json.JsonObject;
 import org.junit.Test;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 

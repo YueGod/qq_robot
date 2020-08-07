@@ -71,7 +71,6 @@ public class RobotApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Thread.sleep(5000);
         ServiceUtils instance = ServiceUtils.getInstance();
         instance.setFuckWordService(fuckWordService);
         instance.setFuncListService(funcListService);

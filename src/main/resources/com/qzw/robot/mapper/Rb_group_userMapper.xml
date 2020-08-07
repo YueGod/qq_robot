@@ -11,7 +11,7 @@
     </resultMap>
 
     <select id="findUserByQQAndGroupNumber" resultType="com.qzw.robot.entity.Rb_group_user">
-        select u.id,u.qq,u.nickname,u.group_id
+        select u.id, qq, nickname, group_id, score
         from (select * from rb_group)g, (select * from rb_group_user)u
         where g.id = u.group_id and u.qq = ${qq} and g.number = ${number}
     </select>
