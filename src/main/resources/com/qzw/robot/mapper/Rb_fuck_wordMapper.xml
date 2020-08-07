@@ -8,4 +8,12 @@
         <result column="words" property="words" />
     </resultMap>
 
+    <select id="findByFuckWord" resultType="com.qzw.robot.entity.Rb_fuck_word">
+        select * from rb_fuck_word
+        where words = #{word}
+    </select>
+
+    <select id="findAllWords" parameterType="String" resultType="java.lang.String">
+        select words from rb_fuck_word
+    </select>
 </mapper>

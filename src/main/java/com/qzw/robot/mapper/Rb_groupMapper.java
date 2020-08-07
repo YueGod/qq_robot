@@ -4,6 +4,8 @@ import com.qzw.robot.entity.Rb_group;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -14,5 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface Rb_groupMapper extends BaseMapper<Rb_group> {
+    Rb_group findByNumber(String number);
 
 }

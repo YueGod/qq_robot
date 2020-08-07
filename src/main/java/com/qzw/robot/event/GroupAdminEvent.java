@@ -5,9 +5,12 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.qzw.robot.entity.Rb_group;
+import com.qzw.robot.entity.Rb_group_history;
 import com.qzw.robot.entity.Rb_group_user;
 import com.qzw.robot.service.IRb_groupService;
+import com.qzw.robot.service.IRb_group_historyService;
 import com.qzw.robot.service.IRb_group_userService;
+import com.qzw.robot.util.ServiceUtils;
 import com.qzw.robot.util.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.event.EventHandler;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
 
 /**
  * @author ：quziwei
@@ -28,14 +32,9 @@ import javax.annotation.PostConstruct;
 
 @Slf4j
 public class GroupAdminEvent extends AbstractEvent{
-    private IRb_groupService groupService;
-    private IRb_group_userService group_userService;
-
-    @PostConstruct
-    public void init(){
-        this.groupService = SpringUtil.getBean(IRb_groupService.class);
-        this.group_userService = SpringUtil.getBean(IRb_group_userService.class);
-    }
+    private IRb_groupService groupService = ServiceUtils.getInstance().getGroupService();
+    private IRb_group_userService group_userService = ServiceUtils.getInstance().getUserService();
+    private IRb_group_historyService group_historyService = ServiceUtils.getInstance().getHistoryService();
 
     /**
      * 新成员加入群组
@@ -112,12 +111,19 @@ public class GroupAdminEvent extends AbstractEvent{
     @EventHandler
     public void onBotRecalled(MessageRecallEvent.GroupRecall event) {
         MessageChainBuilder messages = new MessageChainBuilder() {{
+            Long time = event.getMessageTime()*1000L;
+            String qq = String.valueOf(event.getAuthorId());
+            String number = String.valueOf(event.getGroup().getId());
+            Rb_group_history history = group_historyService.findByQqAndGroupIdAndCreateDate(qq,number,new Date(time));
             add("👀群员撤回消息提醒\n" + event.getGroup().get(event.getOperator().getId()).getNameCard() + " (" + event.getOperator().getId() + ") " +
                     "撤回了" +
                     event.getGroup().get(event.getAuthorId()).getNameCard() + " (" + event.getAuthorId() + ") " +
                     "在 " +
                     TimeUtil.reformatDateTimeOfTimestamp(event.getMessageTime()) +
-                    " 发的一条消息。");
+                    " 发的一条消息。\n"+
+                    "消息内容：\n"+
+                    history.getContent());
+
         }};
         event.getGroup().sendMessage(messages.asMessageChain());
     }

@@ -2,6 +2,7 @@ package com.qzw.robot.event;
 
 import com.qzw.robot.util.SpringUtil;
 import kotlin.coroutines.experimental.CoroutineContext;
+import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.GroupMemberEvent;
 import org.jetbrains.annotations.NotNull;
@@ -11,8 +12,11 @@ import org.jetbrains.annotations.NotNull;
  * @date ：06/08/2020 16:11
  * @description：群管理员监听事件
  */
-public abstract class AbstractEvent extends SimpleListenerHost {
 
+public abstract class AbstractEvent extends SimpleListenerHost {
+    /**
+     * 全局异常捕获！
+     */
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         System.out.println(context + " " + exception);
     }

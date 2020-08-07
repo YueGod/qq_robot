@@ -14,6 +14,18 @@ import java.io.Serializable;
 public class ServiceUtils {
     private volatile static ServiceUtils instance;
 
+    private IRb_group_historyService historyService;
+
+    private IRb_fuck_wordService fuckWordService;
+
+    private IRb_group_userService userService;
+
+    private IRb_groupService groupService;
+
+    private IRb_func_listService funcListService;
+
+    private IRb_menu_listService menuListService;
+
     private ServiceUtils(){}
 
     public static ServiceUtils getInstance() {
@@ -27,27 +39,51 @@ public class ServiceUtils {
         return instance;
     }
 
-    public IRb_groupService groupService(){
-        return SpringUtil.getBean(IRb_groupService.class);
+    public IRb_group_historyService getHistoryService() {
+        return historyService;
     }
 
-    public IRb_group_userService userService(){
-        return SpringUtil.getBean(IRb_group_userService.class);
+    public void setHistoryService(IRb_group_historyService historyService) {
+        this.historyService = historyService;
     }
 
-    public IRb_group_historyService historyService(){
-        return SpringUtil.getBean(IRb_group_historyService.class);
+    public IRb_fuck_wordService getFuckWordService() {
+        return fuckWordService;
     }
 
-    public IRb_menu_listService menuListService(){
-        return SpringUtil.getBean(IRb_menu_listService.class);
+    public void setFuckWordService(IRb_fuck_wordService fuckWordService) {
+        this.fuckWordService = fuckWordService;
     }
 
-    public IRb_fuck_wordService fuckWordService(){
-        return SpringUtil.getBean(IRb_fuck_wordService.class);
+    public IRb_group_userService getUserService() {
+        return userService;
     }
 
-    public IRb_func_listService funcListService(){
-        return SpringUtil.getBean(IRb_func_listService.class);
+    public void setUserService(IRb_group_userService userService) {
+        this.userService = userService;
+    }
+
+    public IRb_groupService getGroupService() {
+        return groupService;
+    }
+
+    public void setGroupService(IRb_groupService groupService) {
+        this.groupService = groupService;
+    }
+
+    public IRb_func_listService getFuncListService() {
+        return funcListService;
+    }
+
+    public void setFuncListService(IRb_func_listService funcListService) {
+        this.funcListService = funcListService;
+    }
+
+    public IRb_menu_listService getMenuListService() {
+        return menuListService;
+    }
+
+    public void setMenuListService(IRb_menu_listService menuListService) {
+        this.menuListService = menuListService;
     }
 }

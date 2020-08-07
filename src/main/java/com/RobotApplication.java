@@ -1,11 +1,8 @@
 package com;
 
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUnit;
 import com.qzw.robot.event.GroupAdminEvent;
-import com.qzw.robot.service.IRb_groupService;
-import com.qzw.robot.service.IRb_group_historyService;
-import com.qzw.robot.service.IRb_group_userService;
+import com.qzw.robot.event.GroupMessagesEvent;
+import com.qzw.robot.service.*;
 import com.qzw.robot.util.RobotUtils;
 import com.qzw.robot.util.ServiceUtils;
 import com.qzw.robot.util.TimeUtil;
@@ -16,16 +13,12 @@ import net.mamoe.mirai.utils.BotConfiguration;
 import net.mamoe.mirai.utils.SystemDeviceInfoKt;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 import java.io.File;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author ：quziwei
@@ -39,9 +32,9 @@ public class RobotApplication implements CommandLineRunner {
 
     public static String startTime = TimeUtil.getDateTimeString();
 
-    private Long qq=1773979533L;
+    private Long qq = 1773979533L;
 
-    private String password="quziwei123";
+    private String password = "quziwei123";
 
     @Autowired
     private IRb_groupService groupService;
@@ -52,16 +45,32 @@ public class RobotApplication implements CommandLineRunner {
     @Autowired
     private IRb_group_historyService historyService;
 
+    @Autowired
+    private IRb_menu_listService menuListService;
+
+    @Autowired
+    private IRb_fuck_wordService fuckWordService;
+
+    @Autowired
+    private IRb_func_listService funcListService;
+
+
     public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(RobotApplication.class, args);
-        Thread.currentThread().join();
+
     }
-
-
 
 
     @Override
     public void run(String... args) throws Exception {
+        Thread.sleep(5000);
+        ServiceUtils instance = ServiceUtils.getInstance();
+        instance.setFuckWordService(fuckWordService);
+        instance.setFuncListService(funcListService);
+        instance.setGroupService(groupService);
+        instance.setMenuListService(menuListService);
+        instance.setHistoryService(historyService);
+        instance.setUserService(userService);
         //初始化机器人
         bot = BotFactoryJvm.newBot(
                 qq,
@@ -77,15 +86,16 @@ public class RobotApplication implements CommandLineRunner {
 
         //监听时间
         Events.registerEvents(bot, new GroupAdminEvent());
+        Events.registerEvents(bot, new GroupMessagesEvent());
         // 发送启动成功提示消息
         String endTime = TimeUtil.getDateTimeString();
-        for (Long groupId : RobotUtils.adminGroups) {
-            bot.getGroup(groupId).sendMessage("[INFO] " + " 启动成功" + "\n" +
-                    "开始启动时间: " + startTime + "\n" +
-                    "完成启动时间: " + endTime + "\n" +
-                    "启动耗时: " + DateTime.of(startTime, "YYYY年MM月dd日 HH:mm:ss").between(DateTime.of(endTime, "YYYY年MM月dd日 HH:mm:ss"), DateUnit.SECOND) + "s"
-            );
-        }
+//        for (Long groupId : RobotUtils.adminGroups) {
+//            bot.getGroup(groupId).sendMessage("[INFO] " + " 启动成功" + "\n" +
+//                    "开始启动时间: " + startTime + "\n" +
+//                    "完成启动时间: " + endTime + "\n" +
+//                    "启动耗时: " + DateTime.of(startTime, "YYYY年MM月dd日 HH:mm:ss").between(DateTime.of(endTime, "YYYY年MM月dd日 HH:mm:ss"), DateUnit.SECOND) + "s"
+//            );
+//        }
 
         // 挂载该机器人的线程
         bot.join();

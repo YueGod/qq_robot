@@ -8,5 +8,10 @@
         <result column="name" property="name" />
         <result column="number" property="number" />
     </resultMap>
+    
+    <select id="findByNumber" resultType="com.qzw.robot.entity.Rb_group">
+        select * from rb_group
+        where number = ${number}
+    </select>
 
 </mapper>

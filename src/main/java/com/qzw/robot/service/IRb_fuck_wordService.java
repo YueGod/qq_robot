@@ -3,6 +3,8 @@ package com.qzw.robot.service;
 import com.qzw.robot.entity.Rb_fuck_word;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -12,5 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-08-06
  */
 public interface IRb_fuck_wordService extends IService<Rb_fuck_word> {
+    boolean isFuckWord(String word);
+
 
 }

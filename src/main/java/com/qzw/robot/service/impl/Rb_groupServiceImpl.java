@@ -6,6 +6,8 @@ import com.qzw.robot.service.IRb_groupService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  *  服务实现类
@@ -16,10 +18,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class Rb_groupServiceImpl extends ServiceImpl<Rb_groupMapper, Rb_group> implements IRb_groupService {
-
+    @Resource
+    private Rb_groupMapper groupMapper;
 
     @Override
     public Rb_group findByNumber(String number) {
-        return null;
+        return groupMapper.findByNumber(number);
     }
 }
