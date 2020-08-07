@@ -8,5 +8,7 @@
         <result column="name" property="name" />
         <result column="status" property="status" />
     </resultMap>
-
+    <select id="findAll" parameterType="java.lang.String" resultType="java.lang.String">
+        select * from rb_menu_list
+    </select>
 </mapper>

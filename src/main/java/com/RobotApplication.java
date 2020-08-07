@@ -6,19 +6,26 @@ import com.qzw.robot.service.*;
 import com.qzw.robot.util.RobotUtils;
 import com.qzw.robot.util.ServiceUtils;
 import com.qzw.robot.util.TimeUtil;
+import kotlinx.io.core.Input;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactoryJvm;
 import net.mamoe.mirai.event.Events;
 import net.mamoe.mirai.utils.BotConfiguration;
+import net.mamoe.mirai.utils.ExternalImage;
+import net.mamoe.mirai.utils.FileCacheStrategy;
 import net.mamoe.mirai.utils.SystemDeviceInfoKt;
+import org.jetbrains.annotations.NotNull;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * @author ：quziwei
@@ -55,6 +62,7 @@ public class RobotApplication implements CommandLineRunner {
     private IRb_func_listService funcListService;
 
 
+
     public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(RobotApplication.class, args);
 
@@ -79,6 +87,9 @@ public class RobotApplication implements CommandLineRunner {
                     // 设备缓存信息
                     //setProtocol(MiraiProtocol.ANDROID_PHONE);
                     setDeviceInfo(context -> SystemDeviceInfoKt.loadAsDeviceInfo(new File("deviceInfo.json"), getJson(), context));
+                    setFileCacheStrategy(FileCacheStrategy.MemoryCache.INSTANCE);
+                    RobotUtils.memoryCache = FileCacheStrategy.MemoryCache.INSTANCE;
+
                 }}
         );
         // 登录

@@ -6,6 +6,9 @@ import com.qzw.robot.service.IRb_func_listService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -16,5 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class Rb_func_listServiceImpl extends ServiceImpl<Rb_func_listMapper, Rb_func_list> implements IRb_func_listService {
+    @Resource
+    private Rb_func_listMapper funcListMapper;
 
+    @Override
+    public List<String> findList() {
+        return funcListMapper.findList();
+    }
 }

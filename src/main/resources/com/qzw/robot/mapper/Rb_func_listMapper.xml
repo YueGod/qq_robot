@@ -9,4 +9,7 @@
         <result column="menu_id" property="menu_id" />
     </resultMap>
 
+    <select id="findList" parameterType="java.lang.String" resultType="java.lang.String">
+        select 'name' from rb_func_list
+    </select>
 </mapper>

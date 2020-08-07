@@ -3,6 +3,7 @@ package com.qzw.robot.util;
 import com.qzw.robot.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.Serializable;
 
@@ -25,6 +26,8 @@ public class ServiceUtils {
     private IRb_func_listService funcListService;
 
     private IRb_menu_listService menuListService;
+
+    private RestTemplate restTemplate;
 
     private ServiceUtils(){}
 
@@ -85,5 +88,13 @@ public class ServiceUtils {
 
     public void setMenuListService(IRb_menu_listService menuListService) {
         this.menuListService = menuListService;
+    }
+
+    public RestTemplate getRestTemplate() {
+        return restTemplate;
+    }
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 }

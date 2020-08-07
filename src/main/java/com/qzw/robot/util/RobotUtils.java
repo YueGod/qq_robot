@@ -5,6 +5,7 @@ import com.qzw.robot.entity.Rb_group;
 import com.qzw.robot.entity.Rb_group_history;
 import com.qzw.robot.entity.Rb_group_user;
 import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.utils.FileCacheStrategy;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.PostConstruct;
@@ -18,25 +19,27 @@ import java.util.Set;
  */
 
 public class RobotUtils {
-    private static RedisTemplate redisTemplate = SpringUtil.getBean(RedisTemplate.class);
-
-
+    private static RobotUtils instance;
 
     public static final ConcurrentHashSet<Long> adminGroups = new ConcurrentHashSet<>();
 
-    public static List<Rb_group> groupList(){
-        return (List<Rb_group>) redisTemplate.opsForValue().get("groups");
+    public static FileCacheStrategy.MemoryCache memoryCache;
+
+    private RobotUtils(){}
+
+    public static RobotUtils getInstance() {
+        if (instance == null){
+            synchronized (RobotUtils.class){
+                if (instance == null){
+                    instance = new RobotUtils();
+                    return instance;
+                }
+            }
+        }
+        return instance;
     }
 
-    public static List<Rb_group_history> historyList(){
-        return (List<Rb_group_history>) redisTemplate.opsForValue().get("histories");
+    public void a(){
+
     }
-
-    public static List<Rb_group_user> userList(){
-        return (List<Rb_group_user>) redisTemplate.opsForValue().get("users");
-    }
-
-
-
-
 }
