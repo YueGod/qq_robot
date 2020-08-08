@@ -4,6 +4,7 @@ import cn.hutool.core.collection.ConcurrentHashSet;
 import com.qzw.robot.entity.Rb_group;
 import com.qzw.robot.entity.Rb_group_history;
 import com.qzw.robot.entity.Rb_group_user;
+import com.qzw.robot.model.CheckIn;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.utils.FileCacheStrategy;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,6 +25,8 @@ public class RobotUtils {
     public static final ConcurrentHashSet<Long> adminGroups = new ConcurrentHashSet<>();
 
     public static FileCacheStrategy.MemoryCache memoryCache;
+
+    public static ConcurrentHashSet<CheckIn> checkIns = new ConcurrentHashSet<>();
 
     private RobotUtils(){}
 

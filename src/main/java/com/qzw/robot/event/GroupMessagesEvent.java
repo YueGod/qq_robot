@@ -16,16 +16,20 @@ import com.qzw.robot.util.ServiceUtils;
 import com.qzw.robot.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.event.EventHandler;
+import net.mamoe.mirai.event.Listener;
 import net.mamoe.mirai.event.ListeningStatus;
 import net.mamoe.mirai.message.GroupMessageEvent;
 import net.mamoe.mirai.message.data.GroupImage;
 import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.message.data.Message;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.qqandroid.message.OnlineGroupImageImpl;
+import net.mamoe.mirai.qqandroid.network.protocol.data.proto.ImMsgBody;
 import net.mamoe.mirai.utils.ExternalImage;
 import net.mamoe.mirai.utils.FileCacheStrategy;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.net.URLEncoder;
@@ -47,7 +51,7 @@ public class GroupMessagesEvent extends AbstractEvent {
     private StringRedisTemplate stringRedisTemplate = SpringUtil.getBean(StringRedisTemplate.class);
     private IRb_fuck_wordService fuckWordService = ServiceUtils.getInstance().getFuckWordService();
 
-    @EventHandler
+    @EventHandler(priority = Listener.EventPriority.HIGHEST)
     public ListeningStatus message(GroupMessageEvent event) {
 
         /**
@@ -123,17 +127,24 @@ public class GroupMessagesEvent extends AbstractEvent {
          */
         if (event.getMessage().toString().matches(".*\\[mirai:at:" + event.getBot().getId() + ",.*\\].*") &&
                 !event.getMessage().toString().matches(".*\\[mirai:quote:\\d*,\\d*\\].*")) {
-            System.out.println(event.getMessage().toString());
+            if (!StringUtils.isEmpty(msg)){
+                event.getGroup().sendMessage(msg);
+
+                return ListeningStatus.LISTENING;
+            }
             event.getGroup().sendMessage("@我是没用的\n发送 \"功能列表\" 获取功能列表");
             return ListeningStatus.LISTENING;
         }
+
         if (msg.equals("菜单列表")) {
             MenuListHandler menuListHandler = new MenuListHandler();
             String list = menuListHandler.list();
             event.getGroup().sendMessage(list);
             return ListeningStatus.LISTENING;
         }
-        Music music = new Music(msg,event);
+        new Music(msg,event);
         return ListeningStatus.LISTENING;
     }
+
+
 }

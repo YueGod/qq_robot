@@ -1,4 +1,9 @@
+import com.RobotApplication;
 import org.junit.Test;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * @author ：quziwei
@@ -12,4 +17,13 @@ public class MessageTest {
         String s = "听音乐 lemon";
         System.out.println(s.indexOf("听音乐 "));
     }
+
+    @Test
+    public void source() throws InterruptedException {
+
+
+
+    }
+
+
 }

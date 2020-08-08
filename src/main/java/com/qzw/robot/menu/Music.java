@@ -3,6 +3,7 @@ package com.qzw.robot.menu;
 import com.qzw.robot.event.GroupMessagesEvent;
 import com.qzw.robot.handler.MusicHandler;
 import net.mamoe.mirai.message.GroupMessageEvent;
+import org.springframework.util.StringUtils;
 
 /**
  * @author ：quziwei
@@ -21,7 +22,11 @@ public class Music {
 
     public void findMusic(String msg, GroupMessageEvent event){
         String music = new MusicHandler().findMusic(msg);
-        event.getGroup().sendMessage(music);
+        if (!StringUtils.isEmpty(music)){
+            event.getGroup().sendMessage(music);
+        }else {
+            event.getGroup().sendMessage("对不起，没有找到\""+msg.replaceAll("听音乐 ","")+"\"这首歌");
+        }
     }
 
 }

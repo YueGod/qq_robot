@@ -1,7 +1,12 @@
 package com.qzw.robot.util;
 
 import com.qzw.robot.service.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -14,17 +19,34 @@ import java.io.Serializable;
 public class ServiceUtils {
     private volatile static ServiceUtils instance;
 
+    @Getter
+    @Setter
     private IRb_group_historyService historyService;
 
+    @Getter
+    @Setter
     private IRb_fuck_wordService fuckWordService;
 
+    @Getter
+    @Setter
     private IRb_group_userService userService;
 
+    @Getter
+    @Setter
     private IRb_groupService groupService;
 
+    @Getter
+    @Setter
     private IRb_func_listService funcListService;
 
+    @Getter
+    @Setter
     private IRb_menu_listService menuListService;
+
+    @Getter
+    @Setter
+    private RedisTemplate redisTemplate;
+
 
 
     private ServiceUtils(){}
@@ -38,54 +60,6 @@ public class ServiceUtils {
             }
         }
         return instance;
-    }
-
-    public IRb_group_historyService getHistoryService() {
-        return historyService;
-    }
-
-    public void setHistoryService(IRb_group_historyService historyService) {
-        this.historyService = historyService;
-    }
-
-    public IRb_fuck_wordService getFuckWordService() {
-        return fuckWordService;
-    }
-
-    public void setFuckWordService(IRb_fuck_wordService fuckWordService) {
-        this.fuckWordService = fuckWordService;
-    }
-
-    public IRb_group_userService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(IRb_group_userService userService) {
-        this.userService = userService;
-    }
-
-    public IRb_groupService getGroupService() {
-        return groupService;
-    }
-
-    public void setGroupService(IRb_groupService groupService) {
-        this.groupService = groupService;
-    }
-
-    public IRb_func_listService getFuncListService() {
-        return funcListService;
-    }
-
-    public void setFuncListService(IRb_func_listService funcListService) {
-        this.funcListService = funcListService;
-    }
-
-    public IRb_menu_listService getMenuListService() {
-        return menuListService;
-    }
-
-    public void setMenuListService(IRb_menu_listService menuListService) {
-        this.menuListService = menuListService;
     }
 
 

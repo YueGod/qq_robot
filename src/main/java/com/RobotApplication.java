@@ -21,6 +21,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -61,6 +64,8 @@ public class RobotApplication implements CommandLineRunner {
     @Autowired
     private IRb_func_listService funcListService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -78,6 +83,7 @@ public class RobotApplication implements CommandLineRunner {
         instance.setMenuListService(menuListService);
         instance.setHistoryService(historyService);
         instance.setUserService(userService);
+        instance.setRedisTemplate(redisTemplate);
         //初始化机器人
         bot = BotFactoryJvm.newBot(
                 qq,
