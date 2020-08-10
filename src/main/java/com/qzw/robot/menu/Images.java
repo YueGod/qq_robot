@@ -29,7 +29,9 @@ public class Images{
         }catch (Exception e){
             if (msg.indexOf("看美女") == 0){
                 girl(msg, event);
+                return;
             }
+            new Video(msg, event);
         }
     }
 

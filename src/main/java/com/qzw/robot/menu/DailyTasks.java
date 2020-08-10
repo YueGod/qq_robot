@@ -47,8 +47,9 @@ public class DailyTasks{
         checkIn.setQq(qq);
         if (isCheckInOnRedis(checkIn)){
             MessageChainBuilder builder = new MessageChainBuilder(){{
-                add(new At(event.getSender()));
+
                 add("您今天已经签到过~");
+                add(new At(event.getSender()));
             }};
             event.getGroup().sendMessage(builder.asMessageChain());
             return;

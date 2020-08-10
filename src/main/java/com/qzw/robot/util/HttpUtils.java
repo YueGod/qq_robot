@@ -5,14 +5,11 @@ package com.qzw.robot.util;
  * @date ：07/08/2020 11:18
  * @description：
  */
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -30,6 +27,10 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONException;
+import cn.hutool.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -290,5 +291,42 @@ public class HttpUtils {
         @Override
         public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
         }
+    }
+
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+
+    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        try (InputStream is = new URL(url).openStream()) {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String jsonText = readAll(rd);
+            return new JSONObject(jsonText);
+        }
+    }
+
+    public static JSONArray readJsonArrayFromUrl(String url) throws IOException, JSONException {
+        try (InputStream is = new URL(url).openStream()) {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String jsonText = readAll(rd);
+            return new JSONArray(jsonText);
+        }
+    }
+
+    public static String chnCharterReplace(String str) throws UnsupportedEncodingException {
+        return java.net.URLEncoder.encode(str, "utf-8");
+    }
+
+    public static String spaceReplace(String str) {
+        return str.replaceAll("\\s", "+");
+    }
+
+    public static String chnAndSpaceReplace(String str) throws UnsupportedEncodingException {
+        return chnCharterReplace(spaceReplace(str));
     }
 }
